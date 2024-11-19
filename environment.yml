@@ -1,0 +1,28 @@
+name: pp-conda2
+channels:
+  - pytorch
+  - nvidia
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pytorch
+  - scipy
+  - scikit-learn
+  - sk2torch
+  - matplotlib
+  - seaborn
+  - py-xgboost
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=12.1
+  - ipykernel
+  - numpy
+  - pandas
+  - transformers
+  - accelerate
+  - datasets
+  - gensim
+  - sentencepiece
+  - protobuf>=3.20
+  - lxml

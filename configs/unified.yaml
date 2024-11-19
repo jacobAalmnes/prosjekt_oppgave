@@ -1,0 +1,162 @@
+seed: 42
+
+study:
+  load_if_exists: False
+
+experiment:
+  nn:
+    run1: 
+      drop01-e4096-d512: 
+        encoder: # Only used in mtl
+          nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.1
+        decoders:
+          hidden_nn: [512]
+          dropout: 0.1
+      drop03-e4096-d512: 
+        encoder: # Only used in mtl
+          nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.3
+        decoders:
+          hidden_nn: [512]
+          dropout: 0.3
+      drop05-e4096-d512: 
+        encoder: # Only used in mtl
+          nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: [512]
+          dropout: 0.5
+      drop01-e1024: 
+        encoder: # Only used in mtl
+          nn: [780, 1024] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.1
+        decoders:
+          hidden_nn: []
+          dropout: 0.1
+      drop03-e1024: 
+        encoder: # Only used in mtl
+          nn: [780, 1024] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.3
+        decoders:
+          hidden_nn: []
+          dropout: 0.3
+      drop05-e1024: 
+        encoder: # Only used in mtl
+          nn: [780, 1024] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: []
+          dropout: 0.5
+      e256: 
+        encoder: # Only used in mtl
+          nn: [780, 256] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.3
+        decoders:
+          hidden_nn: []
+          dropout: 0.3
+      e512: 
+        encoder: # Only used in mtl
+          nn: [780, 512] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.3
+        decoders:
+          hidden_nn: []
+          dropout: 0.3
+      e2048: 
+        encoder: # Only used in mtl
+          nn: [780, 2048] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.3
+        decoders:
+          hidden_nn: []
+          dropout: 0.3
+      e4096: 
+        encoder: # Only used in mtl
+          nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.3
+        decoders:
+          hidden_nn: []
+          dropout: 0.3
+      e2048-d256: 
+        encoder: # Only used in mtl
+          nn: [780, 2048] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.3
+        decoders:
+          hidden_nn: [256]
+          dropout: 0.3
+    
+    run2:
+      e2048-d256: 
+        encoder: # Only used in mtl
+          nn: [780, 2048] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: [256]
+          dropout: 0.5
+      e2048-d512:
+        encoder: # Only used in mtl
+          nn: [780, 2048] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: [512]
+          dropout: 0.5
+      e2048-d64: 
+        encoder: # Only used in mtl
+          nn: [780, 1024] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: [64]
+          dropout: 0.5
+      e2048: 
+        encoder: # Only used in mtl
+          nn: [780, 2048] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: []
+          dropout: 0.5
+      e4096: 
+        encoder: # Only used in mtl
+          nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: []
+          dropout: 0.5
+      e8192: 
+        encoder: # Only used in mtl
+          nn: [780, 8192] # TODO: UPDATE     1st must be input shape[0]
+          dropout: 0.5
+        decoders:
+          hidden_nn: []
+          dropout: 0.5
+  mtl_all:
+    architecture:
+      HPS: {} # Hard parameter sharing
+      MMoE: 
+        img_size: [780, 1] # TODO: UPDATE
+        num_experts: [4, 5, 5] # Docs incorrect..
+      # CGC: #Doesn't work
+      #   img_size: [780, 1] # TODO: UPDATE
+      #   num_experts: [4, 5, 5]
+      DSelect_k:
+        img_size: [780, 1] # TODO: UPDATE
+        num_experts: [4, 5, 5]
+        num_nonzeros: 3
+        kgamma: 1.0
+        
+    weighting: 
+      EW: {}
+      GradNorm:
+        alpha: 1.5
+      MGDA:
+        mgda_gn: "none"
+      UW: {}
+      DWA:
+        T: 2.0
+      GLS: {}
+      GradDrop:
+        leak: 0.0
+          # Does not work with optuna    IMTL: {}
+      RLW: {}
+      Aligned_MTL: {}
+      #DB_MTL:  Not supported with rep grad
+        #DB_beta: 0
+        #DB_beta_sigma: 1

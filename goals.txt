@@ -1,0 +1,8 @@
+Goal: 
+Investigate connection between language used in social media posts and personality of their authors, encompassing various social media platforms and personality models. 
+
+Questions:
+1. How can available data be combined and processed effectively to determine personality?
+2. What gaps exists between current personality models?
+3. What are the differences in language between diffenent social media sites?
+2. What methods can be used to effectively determine personality of social media users?

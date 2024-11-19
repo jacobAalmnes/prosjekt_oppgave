@@ -1,0 +1,80 @@
+split:
+  train: 0.8
+  test: 0.1
+
+dataloaders:
+  train:
+    num_workers: 1
+    pin_memory: False
+    batch_size: 1028
+    shuffle: True
+    drop_last: True
+  test:
+    num_workers: 1
+    pin_memory: False
+    batch_size: 1028
+    shuffle: False
+    drop_last: False
+  val:
+    num_workers: 1
+    pin_memory: False
+    batch_size: 1028
+    shuffle: False
+    drop_last: False
+
+encoder: # Only used in mtl
+  nn: [772, 4096, 1024]
+  dropout: 0.3
+
+metrics:
+  class: 'Acc' 
+  class-args: {'criteria': 'hamming'}
+  reg: 'MAE'
+
+mtl-decoders:
+  hidden_nn: [1024]
+  dropout: 0.3
+
+stl-decoders:
+  hidden_nn: [4096, 1024, 1024]
+  dropout: 0.3
+
+training:
+  checkpoint_name: 'mtl-test'
+  epochs: 100
+  patience: 15
+
+optim_param:
+  optim: 'adamp'
+  lr: 0.005
+  weight_decay: 0.01 # Different for adam than adamw. AdamP recommends 0.01
+  betas: [0.9, 0.999]
+
+scheduler_param:
+  scheduler: 'step'
+  step_size: 10 # How many steps before decay. Default 1
+  gamma: 0.001 # Rate of lr decay. Default 0.1
+
+mtl:
+  weighting: 'GradNorm' # 
+  architecture: 'HPS'
+  kwargs: {'weight_args': {'alpha': 1.5}, 'arch_args': {}}
+  
+experiment:
+  task: 'weighting' # 'default'
+  weighting_methods: 
+    EW:
+    GradNorm:
+      alpha: 1.5
+    MGDA:
+      mgda: "loss+"
+    UW:
+    DWA:
+      T: 2.0
+    GLS:
+    GradDrop:
+      leak: 0.0
+    IMTL:
+    RLW: 
+    Aligned_MTL:
+    DB_MTL:

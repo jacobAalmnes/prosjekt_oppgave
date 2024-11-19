@@ -1,0 +1,11 @@
+/data
+/pp-venv
+/pp-conda*
+/results
+/glove
+/checkpoints
+/tmp
+/tmp_trainer
+*__pycache__
+glove*.zip
+.env

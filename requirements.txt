@@ -1,0 +1,15 @@
+torch
+kaggle
+langchain
+pandas>=2.0.0
+beautifulsoup4
+faiss-cpu
+transformers
+tqdm
+datasets
+sentencepiece
+numpy
+matplotlib
+scikit-learn
+emoji
+adamp

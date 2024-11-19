@@ -1,0 +1,181 @@
+seed: 42
+
+embeddings:
+  model_name: "distilbert"
+
+split:
+  train: 0.8
+  test: 0.1
+
+dataloaders:
+  train:
+    num_workers: 2
+    pin_memory: True
+    batch_size: 1024
+    shuffle: True
+    drop_last: True
+  test:
+    num_workers: 2
+    pin_memory: True
+    batch_size: 1024
+    shuffle: False
+    drop_last: False
+  val:
+    num_workers: 2
+    pin_memory: True
+    batch_size: 1024
+    shuffle: False
+    drop_last: False
+
+metrics:
+  class: 'Acc' 
+  class-args: 
+    criteria: 'hamming'
+    threshold: 0.50 # For mtl
+  reg: 'MAE'
+
+encoder: # Only used in mtl
+  nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+  dropout: 0.3
+
+mtl-decoders:
+  hidden_nn: [512]
+  dropout: 0.3
+
+stl-decoders:
+  hidden_nn: [4096, 512]
+  dropout: 0.3
+
+training:
+  checkpoint_name: 'mtl-test'
+  epochs: 100
+  patience: 15
+  threshold: 0.50
+
+optim_param:
+  optim: 'adamp'
+  lr: 0.005
+  weight_decay: 0.01 # Different for adam than adamw. AdamP recommends 0.01
+  betas: [0.9, 0.999]
+
+scheduler_param:
+  scheduler: 'step'
+  step_size: 10 # How many steps before decay. Default 1
+  gamma: 0.001 # Rate of lr decay. Default 0.1
+
+defaults:
+  architecture: 'HPS'
+  weighting: 'GradNorm' 
+  kwargs: 
+    weight_args: 
+      alpha: 1.5
+    arch_args: {}
+
+experiment:
+  # task: 'weighting'
+  normalization: {}
+  embeddings: {}
+  decoder: 
+    drop01: 
+      encoder: # Only used in mtl
+        nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.1
+      mtl-decoders:
+        hidden_nn: [512]
+        dropout: 0.1
+    drop03: 
+      encoder: # Only used in mtl
+        nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.3
+      mtl-decoders:
+        hidden_nn: [512]
+        dropout: 0.3
+    drop05: 
+      encoder: # Only used in mtl
+        nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.5
+      mtl-decoders:
+        hidden_nn: [512]
+        dropout: 0.5
+    nohead-256: 
+      encoder: # Only used in mtl
+        nn: [780, 256] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.3
+      mtl-decoders:
+        hidden_nn: []
+        dropout: 0.3
+    nohead-512: 
+      encoder: # Only used in mtl
+        nn: [780, 512] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.3
+      mtl-decoders:
+        hidden_nn: []
+        dropout: 0.3
+    nohead-1024: 
+      encoder: # Only used in mtl
+        nn: [780, 1024] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.3
+      mtl-decoders:
+        hidden_nn: []
+        dropout: 0.3
+    nohead-2048: 
+      encoder: # Only used in mtl
+        nn: [780, 2048] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.3
+      mtl-decoders:
+        hidden_nn: []
+        dropout: 0.3
+    nohead-4096: 
+      encoder: # Only used in mtl
+        nn: [780, 4096] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.3
+      mtl-decoders:
+        hidden_nn: []
+        dropout: 0.3
+    nohead-2048-256: 
+      encoder: # Only used in mtl
+        nn: [780, 2048] # TODO: UPDATE     1st must be input shape[0]
+        dropout: 0.3
+      mtl-decoders:
+        hidden_nn: [256]
+        dropout: 0.3
+    
+  learning_method:
+    mtl:
+      architecture: 'HPS'
+      weighting: 'GradNorm' 
+      kwargs: 
+        weight_args: 
+          alpha: 1.5
+        arch_args: {}
+  architecture:
+    HPS: {} # Hard parameter sharing
+    MMoE: 
+      img_size: [780, 1] # TODO: UPDATE
+      num_experts: [4, 5, 5] # Docs incorrect..
+    # CGC: Doesn't work
+    #   img_size: [780, 1] # TODO: UPDATE
+    #   num_experts: [4, 5, 5]
+    DSelect_k:
+      img_size: [780, 1] # TODO: UPDATE
+      num_experts: [4, 5, 5]
+      num_nonzeros: 3
+      kgamma: 1.0
+  weighting: 
+    EW: {}
+    GradNorm:
+      alpha: 1.5
+    MGDA:
+      mgda_gn: "none"
+    UW: {}
+    DWA:
+      T: 2.0
+    GLS: {}
+    GradDrop:
+      leak: 0.0
+    IMTL: {}
+    RLW: {}
+    Aligned_MTL: {}
+    #DB_MTL:  Not supported with rep grad
+      #DB_beta: 0
+      #DB_beta_sigma: 1
