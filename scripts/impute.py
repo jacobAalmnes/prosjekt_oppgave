@@ -15,7 +15,6 @@ import time
 from joblib import Parallel, delayed
 from fcmeans import FCM
 from sklearn.decomposition import PCA
-from pytesmo.metrics import rmsd, nrmsd, aad
 from fancyimpute import IterativeImputer, KNN
 
 from src.utils import get_commons
