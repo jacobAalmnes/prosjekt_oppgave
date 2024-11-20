@@ -24,7 +24,7 @@ from src.fcki import FCKI, impute_missing_values
 print("STARTING")
 tmp_folder = str(proj_path / 'tmp')
 os.environ['JOBLIB_TEMP_FOLDER'] = tmp_folder
-
+os.mkdir(proj_path / 'tmp')
 print(f"Using tmp_folder: {tmp_folder}")
 print(f"Exists: {os.path.exists(tmp_folder)}, Writable: {os.access(tmp_folder, os.W_OK)}")
 
