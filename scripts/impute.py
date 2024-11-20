@@ -189,6 +189,7 @@ def main2():
         others = [y for x in others for y in constants['columns'][x]]
         others_col = [(over, x) for x in others for over in ('IMP_TARGET', 'ORG_TARGET')]
         task_df = data.drop(others_col, axis=1)
+        os.mkdir(paths['new']['split'])
         task_df.to_csv(paths['new']['split'][task])
 
     logger.info('FINISHED')
