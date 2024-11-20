@@ -7,7 +7,7 @@ from typing import Dict, Tuple
 
 def get_paths() -> dict:
     #Print directory this is in (full path)
-    _project = Path('/cluster') / 'work' / 'jacobaal' / 'pers-pred'
+    _project = Path('/cluster') / 'work' / 'jacobaal' / 'prosjekt_oppgave'
     #this is giga hacky
     _data = _project / 'data'
     _raw = _data / 'raw'
