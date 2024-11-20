@@ -24,6 +24,10 @@ from src.fcki import FCKI, impute_missing_values
 print("STARTING")
 tmp_folder = str(proj_path / 'tmp')
 os.environ['JOBLIB_TEMP_FOLDER'] = tmp_folder
+
+print(f"Using tmp_folder: {tmp_folder}")
+print(f"Exists: {os.path.exists(tmp_folder)}, Writable: {os.access(tmp_folder, os.W_OK)}")
+
 joblib_temp_dir = tempfile.mkdtemp(dir=tmp_folder)
 joblib.Parallel(temp_folder=joblib_temp_dir)
 
