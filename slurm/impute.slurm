@@ -23,5 +23,5 @@ echo "We are using $SLURM_CPUS_ON_NODE cores per node"
 echo "Total of $SLURM_NTASKS cores"
 
 module purge
-source /cluster/home/stefandt/anaconda3/bin/activate ppconda
+source /cluster/home/jacobaal conda activate ppconda
 python scripts/impute.py
