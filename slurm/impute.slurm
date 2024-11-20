@@ -8,7 +8,7 @@
 #SBATCH -c4      
 #SBATCH --job-name="imp-f"
 #SBATCH --output=outputs/impute/mice-f.out
-#SBATCH --mail-user=stefandt@stud.ntnu.no
+#SBATCH --mail-user=jacobaal@stud.ntnu.no
 #SBATCH --mail-type=ALL
 
 WORKDIR=${SLURM_SUBMIT_DIR}

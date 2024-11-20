@@ -46,7 +46,7 @@ sbatch <<EOT
 #SBATCH --job-name="agg"
 #SBATCH --output="$OUTPUT_FILE"
 #SBATCH --gres=gpu:0
-#SBATCH --mail-user=stefandt@stud.ntnu.no
+#SBATCH --mail-user=jacobaal@stud.ntnu.no
 #SBATCH --mail-type=ALL
 #SBATCH -c$CORES_PER_NODE
 
